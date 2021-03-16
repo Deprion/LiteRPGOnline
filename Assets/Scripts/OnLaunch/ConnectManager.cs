@@ -26,13 +26,13 @@ public class ConnectManager : MonoBehaviour
     {
         NetworkManager = GameObject.FindGameObjectWithTag("NetworkManager");
         NetworkManager.GetComponent<NetworkManager>().StartClient();
-        ccm = NetworkManager.GetComponent<ConnectCommands>();
+        ccm = GameObject.FindGameObjectWithTag("Player").GetComponent<ConnectCommands>();
         if (PlayerPrefs.HasKey("Nickname") && PlayerPrefs.HasKey("Password"))
         {
             Debug.Log("access");
             Debug.Log(PlayerPrefs.GetString("Nickname"));
             ccm.CmdResponseDataLogin
-            (PlayerPrefs.GetString("Nickname"), PlayerPrefs.GetString("Password"))
+            (PlayerPrefs.GetString("Nickname"), PlayerPrefs.GetString("Password"));
         }
         else
         {
@@ -43,7 +43,7 @@ public class ConnectManager : MonoBehaviour
 #endif
     public void Connect()
     {
-        if (gameObject.GetComponent<LoginData>().SaveDataLogin())
+        if (GetComponent<LoginData>().SaveDataLogin())
         {
             ccm.CmdCheckAvailableNickname(PlayerPrefs.GetString("Nickname"));
             if (isFreeNick)
